@@ -1,0 +1,34 @@
+version: "3"
+services:
+  nginx:
+    build: ./requirements/nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - app_network
+    restart: always
+
+  wordpress:
+    build: ./requirements/wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - app_network
+    restart: always
+
+  mariadb:
+    build: ./requirements/mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+    restart: always
+
+volumes:
+  wordpress_data:
+  db_data:
+
+networks:
+  app_network:
